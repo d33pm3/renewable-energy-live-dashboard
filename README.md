@@ -21,11 +21,18 @@ The product spec (filters, schema, email workflow) lives in [docs/product-spec.m
 **This is not** a hosted SaaS or a working email-delivery product.
 **This is not** a verified GNA/LTA filing or investment recommendation.
 
+## Where the source is
+
+The **complete application source** is in [`Codebase.zip`](Codebase.zip), under:
+
+- `5_Renewable Energy/src/` — pages, CTUIL client, dashboard, landing, UI kit
+- `5_Renewable Energy/public/` — static assets
+
+The `src/` folder already on `main` is only a partial checkout. Do not run `npm run dev` until you have extracted the zip over it.
+
 ## Run locally
 
 Requires Node.js 18+ and npm. Vite serves the app on port 8080.
-
-Entry files under `src/` are on `main`. Dashboard pages, the CTUIL client, and the shadcn UI kit are still in `Codebase.zip`. Restore them once after clone:
 
 ```bash
 git clone https://github.com/d33pm3/renewable-energy-live-dashboard.git
@@ -37,6 +44,8 @@ cp .env.example .env
 npm i
 npm run dev
 ```
+
+After extract, `src/pages/Index.tsx` and `src/lib/ctuil.ts` must exist. If they do not, the zip did not unpack.
 
 Put your Supabase project URL and anon key in `.env` if you want the fetch/cache path. Without those keys the UI still loads and degrades to whatever local/cached state the app has.
 
