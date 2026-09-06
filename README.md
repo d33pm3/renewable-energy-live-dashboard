@@ -25,9 +25,14 @@ The product spec (filters, schema, email workflow) lives in [docs/product-spec.m
 
 Requires Node.js 18+ and npm. Vite serves the app on port 8080.
 
+Entry files under `src/` are on `main`. Dashboard pages, the CTUIL client, and the shadcn UI kit are still in `Codebase.zip`. Restore them once after clone:
+
 ```bash
 git clone https://github.com/d33pm3/renewable-energy-live-dashboard.git
 cd renewable-energy-live-dashboard
+unzip -o Codebase.zip
+cp -a "5_Renewable Energy/src/." src/
+cp -a "5_Renewable Energy/public/." public/
 cp .env.example .env
 npm i
 npm run dev
@@ -39,8 +44,6 @@ Put your Supabase project URL and anon key in `.env` if you want the fetch/cache
 npm test
 npm run build
 ```
-
-`src/` is on `main`. Do not unzip `Codebase.zip` unless you are recovering an older snapshot.
 
 ## What is not deployed
 
