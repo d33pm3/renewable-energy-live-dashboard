@@ -12,6 +12,7 @@ export interface MonthlyReport {
 
 const FUNCTIONS_BASE = `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/ctuil-reports`;
 
+/** Live list of published RE Effectiveness / Connectivity Granted PDFs on CTUIL. */
 export interface MonthlyReportsResponse {
   reports: MonthlyReport[];
   fetchedAt: string;
@@ -27,6 +28,7 @@ export async function fetchMonthlyReports(): Promise<MonthlyReportsResponse> {
   return data as MonthlyReportsResponse;
 }
 
+/** Same-origin-friendly proxy URL so the PDF can be embedded or downloaded. */
 export function reportFileUrl(pdfUrl: string, download = false) {
   const u = new URL(FUNCTIONS_BASE);
   u.searchParams.set('file', pdfUrl);
