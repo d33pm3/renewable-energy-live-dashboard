@@ -36,6 +36,7 @@ export interface FreshnessStatus {
   type: 'Live API' | 'Latest Scrape' | 'Latest Published PDF' | 'Cached Snapshot';
   timestamp: string;
   healthy: boolean;
+  /** Supplemental feeds (CTUIL's NSWS probe) are optional — never shown as a failure. */
   supplemental?: boolean;
 }
 

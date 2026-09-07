@@ -1,0 +1,3 @@
+project_id = "YOUR_PROJECT_ID_HERE"
+[functions.ctuil-reports]
+verify_jwt = false

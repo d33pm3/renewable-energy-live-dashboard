@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Require tracked application source
+        run: |
+          test -f src/pages/Index.tsx
+          test -f src/lib/ctuil.ts
+          test ! -e "5_Renewable Energy"
+      - name: Env presence without live secrets
+        run: |
+          printf '%s\n' \
+            'VITE_SUPABASE_PROJECT_ID=ci-placeholder' \
+            'VITE_SUPABASE_PUBLISHABLE_KEY=ci-placeholder' \
+            'VITE_SUPABASE_URL=https://example.invalid.supabase.co' > .env
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+      - name: Production build
+        run: npm run build
