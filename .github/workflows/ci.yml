@@ -30,11 +30,10 @@ jobs:
           test -f src/lib/ctuil.ts
       - name: Env presence without live secrets
         run: |
-          cat > .env <<'EOF'
-          VITE_SUPABASE_PROJECT_ID=ci-placeholder
-          VITE_SUPABASE_PUBLISHABLE_KEY=ci-placeholder
-          VITE_SUPABASE_URL=https://example.invalid.supabase.co
-          EOF
+          printf '%s\n' \
+            'VITE_SUPABASE_PROJECT_ID=ci-placeholder' \
+            'VITE_SUPABASE_PUBLISHABLE_KEY=ci-placeholder' \
+            'VITE_SUPABASE_URL=https://example.invalid.supabase.co' > .env
       - name: Install
         run: npm ci
       - name: Test
