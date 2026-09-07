@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: npm
+      - name: Overlay complete source from Codebase.zip
+        run: |
+          unzip -qo Codebase.zip
+          cp -a "5_Renewable Energy/src/." src/
+          cp -a "5_Renewable Energy/public/." public/
+          test -f src/pages/Index.tsx
+          test -f src/lib/ctuil.ts
+      - name: Env presence without live secrets
+        run: |
+          cat > .env <<'EOF'
+          VITE_SUPABASE_PROJECT_ID=ci-placeholder
+          VITE_SUPABASE_PUBLISHABLE_KEY=ci-placeholder
+          VITE_SUPABASE_URL=https://example.invalid.supabase.co
+          EOF
+      - name: Install
+        run: npm ci
+      - name: Test
+        run: npm test
+      - name: Production build
+        run: npm run build
