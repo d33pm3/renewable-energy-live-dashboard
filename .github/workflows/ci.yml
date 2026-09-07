@@ -21,13 +21,11 @@ jobs:
         with:
           node-version: "20"
           cache: npm
-      - name: Overlay complete source from Codebase.zip
+      - name: Require tracked application source
         run: |
-          unzip -qo Codebase.zip
-          cp -a "5_Renewable Energy/src/." src/
-          cp -a "5_Renewable Energy/public/." public/
           test -f src/pages/Index.tsx
           test -f src/lib/ctuil.ts
+          test ! -e "5_Renewable Energy"
       - name: Env presence without live secrets
         run: |
           printf '%s\n' \
